@@ -114,3 +114,4 @@ CREATE TABLE Service_Station (
  CONSTRAINT Car_cat_key
  FOREIGN KEY(Cars_category_id) REFERENCES Cars_category(Cars_category_id)
 );
+---------- Car Rent Database -------------------
