@@ -1,5 +1,5 @@
 import psycopg2
-
+#comment
 from config import host, user, password, database
 
     try:
@@ -21,3 +21,4 @@ from config import host, user, password, database
 except psycopg2.Error as ex:
 
     print("[INFO] ERROR while working with PostgreSQL", ex
+          
