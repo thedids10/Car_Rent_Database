@@ -256,3 +256,4 @@ try:
         
 except psycopg2.Error as e:
     print(f"An error occurred: {e}")
+#test
