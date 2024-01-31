@@ -25,6 +25,7 @@ def Add():
     empsurname = e3.get()
     position = e4.get()
     salary = e5.get()
+    mobile = e6.get()
 
     try:
         conn = psycopg2.connect(
@@ -32,8 +33,8 @@ def Add():
         )
         cursor = conn.cursor()
 
-        sql = "INSERT INTO employers (employer_id, employer_name, employer_surname, employer_position, employer_salary) VALUES (%s, %s, %s, %s, %s)"
-        val = (empid, empname, empsurname, position, salary)
+        sql = "INSERT INTO employers (employer_id, employer_name, employer_surname, employer_position, employer_salary, employer_contact_information VALUES (%s, %s, %s, %s, %s, %s.)"
+        val = (empid, empname, empsurname, position, salary, mobile)
         cursor.execute(sql, val)
         conn.commit()
         messagebox.showinfo("Информация", "Сотрудник успешно добавлен...")
@@ -44,6 +45,7 @@ def Add():
         e3.delete(0, END)
         e4.delete(0, END)
         e5.delete(0, END)
+        e6.delete(0, END)
 
         e1.focus_set()
 
@@ -57,8 +59,10 @@ def Add():
 def update():
     empid = e1.get()
     empname = e2.get()
-    surname = e3.get()
-
+    empsurname = e3.get()
+    position = e4.get()
+    salary = e5.get()
+    mobile = e6.get()  # Получаем новое значение для номера телефона здесь
 
     try:
         conn = psycopg2.connect(
@@ -66,8 +70,8 @@ def update():
         )
         cursor = conn.cursor()
 
-        sql = "UPDATE employers SET employer_name = %s, employer_surname = %s WHERE employer_id = %s"
-        val = (empname, surname, empid)
+        sql = "UPDATE employers SET employer_name = %s, employer_surname = %s, employer_position = %s, employer_salary = %s, employer_contact_information = %s WHERE employer_id = %s"
+        val = (empname, empsurname, position, salary, mobile, empid)  # Поменяйте местами mobile и empid
         cursor.execute(sql, val)
         conn.commit()
         messagebox.showinfo("Информация", "Запись успешно обновлена...")
@@ -78,6 +82,9 @@ def update():
         e1.delete(0, END)
         e2.delete(0, END)
         e3.delete(0, END)
+        e4.delete(0, END)
+        e5.delete(0, END)
+        e6.delete(0, END)
 
         e1.focus_set()
         clear_listbox()
@@ -85,6 +92,8 @@ def update():
     except Exception as e:
         print(e)
         messagebox.showerror("Ошибка", "Не удалось обновить запись.")
+
+
 
 def delete():
     empid = e1.get()
@@ -145,6 +154,7 @@ Label(root, text="Имя_сотрудника").place(x=10, y=40)
 Label(root, text="Фамилия_сотрудника").place(x=10, y=70)
 Label(root, text="Должность").place(x=10, y=100)
 Label(root, text="Зарплата").place(x=10, y=130)
+Label(root, text="Номер телефона").place(x=10, y=160)
 
 
 e1 = Entry(root)
@@ -162,11 +172,14 @@ e4.place(x=140, y=100)
 e5 = Entry(root)
 e5.place(x=140, y=130)
 
+e6 = Entry(root)
+e6.place(x=140, y=160)
 
 
-Button(root, text="Добавить", command=Add, height=3, width=13).place(x=30, y=160)
-Button(root, text="Обновить", command=update, height=3, width=13).place(x=150, y=160)
-Button(root, text="Удалить", command=delete, height=3, width=13).place(x=270, y=160)
+
+Button(root, text="Добавить", command=Add, height=3, width=13).place(x=30, y=200)
+Button(root, text="Обновить", command=update, height=3, width=13).place(x=150, y=200)
+Button(root, text="Удалить", command=delete, height=3, width=13).place(x=270, y=200)
 
 
 
