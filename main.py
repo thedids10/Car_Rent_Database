@@ -186,7 +186,7 @@ try:
                 text_widget.insert("1.0", formatted_data)
 
 
-        def open_car_file():
+        def order_car_file():
             try:
                 subprocess.Popen(['python', 'cars.py'])
             except Exception as e:
@@ -278,7 +278,7 @@ try:
         feedBacks.pack()
         discounts = tk.Button(root, text="Склад", command=showstock,width=20, height=2)
         discounts.pack()
-        button_open_car_file = tk.Button(root, text="Просмотреть автомобили", command=open_car_file, width=20, height=2)
+        button_open_car_file = tk.Button(root, text="Заказать автомобиль", command=order_car_file, width=20, height=2)
         button_open_car_file.pack()
         deliveries = tk.Button(root, text="Менеджеры", command=showmanagers, width=20, height=2)
         deliveries.pack()
