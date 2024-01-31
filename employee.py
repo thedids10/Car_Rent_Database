@@ -23,7 +23,8 @@ def Add():
     empid = e1.get()
     empname = e2.get()
     empsurname = e3.get()
-
+    position = e4.get()
+    salary = e5.get()
 
     try:
         conn = psycopg2.connect(
@@ -31,8 +32,8 @@ def Add():
         )
         cursor = conn.cursor()
 
-        sql = "INSERT INTO employers (employer_id, employer_name, employer_surname) VALUES (%s, %s, %s)"
-        val = (empid, empname, empsurname)
+        sql = "INSERT INTO employers (employer_id, employer_name, employer_surname, employer_position, employer_salary) VALUES (%s, %s, %s, %s, %s)"
+        val = (empid, empname, empsurname, position, salary)
         cursor.execute(sql, val)
         conn.commit()
         messagebox.showinfo("Информация", "Сотрудник успешно добавлен...")
@@ -41,6 +42,8 @@ def Add():
         e1.delete(0, END)
         e2.delete(0, END)
         e3.delete(0, END)
+        e4.delete(0, END)
+        e5.delete(0, END)
 
         e1.focus_set()
 
@@ -49,6 +52,7 @@ def Add():
     except Exception as e:
         print(e)
         messagebox.showerror("Ошибка", "Не удалось добавить сотрудника.")
+
 
 def update():
     empid = e1.get()
@@ -139,6 +143,8 @@ tk.Label(root, text="База данных персонала", fg="red", font=(
 tk.Label(root, text="ID_сотрудника").place(x=10, y=10)
 Label(root, text="Имя_сотрудника").place(x=10, y=40)
 Label(root, text="Фамилия_сотрудника").place(x=10, y=70)
+Label(root, text="Должность").place(x=10, y=100)
+Label(root, text="Зарплата").place(x=10, y=130)
 
 
 e1 = Entry(root)
@@ -150,11 +156,21 @@ e2.place(x=140, y=40)
 e3 = Entry(root)
 e3.place(x=140, y=70)
 
+e4 = Entry(root)
+e4.place(x=140, y=100)
+
+e5 = Entry(root)
+e5.place(x=140, y=130)
 
 
-Button(root, text="Добавить", command=Add, height=3, width=13).place(x=30, y=130)
-Button(root, text="Обновить", command=update, height=3, width=13).place(x=140, y=130)
-Button(root, text="Удалить", command=delete, height=3, width=13).place(x=250, y=130)
+
+Button(root, text="Добавить", command=Add, height=3, width=13).place(x=30, y=160)
+Button(root, text="Обновить", command=update, height=3, width=13).place(x=150, y=160)
+Button(root, text="Удалить", command=delete, height=3, width=13).place(x=270, y=160)
+
+
+
+
 
 cols = ('ID_сотрудника', 'Имя_сотрудника', 'Фамилия_сотрудника', 'Должность', 'Зарплата', 'Контактная информация')
 listBox = ttk.Treeview(root, columns=cols, show='headings')
@@ -162,7 +178,8 @@ listBox = ttk.Treeview(root, columns=cols, show='headings')
 for col in cols:
     listBox.heading(col, text=col)
     listBox.grid(row=1, column=0, columnspan=2)
-    listBox.place(x=10, y=200)
+    listBox.place(x=10, y=350)
+
 
 show()
 listBox.bind('<Double-Button-1>', GetValue)
