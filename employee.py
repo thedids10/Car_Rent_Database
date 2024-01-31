@@ -119,7 +119,7 @@ def show():
         )
         cursor = conn.cursor()
 
-        cursor.execute("SELECT employer_id, employer_name, employer_surname FROM employers")
+        cursor.execute("SELECT * FROM employers")
         records = cursor.fetchall()
 
         for record in records:
@@ -133,9 +133,9 @@ def show():
         messagebox.showerror("Ошибка", "Не удалось получить записи.")
 
 root = Tk()
-root.geometry("1000x800")
+root.geometry("1300x800")
 
-tk.Label(root, text="Регистрация Сотрудника", fg="red", font=(None, 30)).place(x=300, y=5)
+tk.Label(root, text="База данных персонала", fg="red", font=(None, 30)).place(x=300, y=5)
 tk.Label(root, text="ID_сотрудника").place(x=10, y=10)
 Label(root, text="Имя_сотрудника").place(x=10, y=40)
 Label(root, text="Фамилия_сотрудника").place(x=10, y=70)
@@ -156,7 +156,7 @@ Button(root, text="Добавить", command=Add, height=3, width=13).place(x=3
 Button(root, text="Обновить", command=update, height=3, width=13).place(x=140, y=130)
 Button(root, text="Удалить", command=delete, height=3, width=13).place(x=250, y=130)
 
-cols = ('ID_сотрудника', 'Имя_сотрудника', 'Фамилия_сотрудника')
+cols = ('ID_сотрудника', 'Имя_сотрудника', 'Фамилия_сотрудника', 'Должность', 'Зарплата', 'Контактная информация')
 listBox = ttk.Treeview(root, columns=cols, show='headings')
 
 for col in cols:
