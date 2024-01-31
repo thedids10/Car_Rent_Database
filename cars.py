@@ -10,24 +10,23 @@ def GetValue(event):
     e1.delete(0, END)
     e2.delete(0, END)
     e3.delete(0, END)
-    e4.delete(0, END)
-    e5.delete(0, END)
+
+
     row_id = listBox.selection()[0]
     select = listBox.item(row_id, 'values')
     e1.insert(0, select[0])
     e2.insert(0, select[1])
     e3.insert(0, select[2])
-    e4.insert(0, select[2])
-    e5.insert(0, select[2])
+
+
 
 
 
 
 def Add():
-    empid = e1.get()
-    empname = e2.get()
-    empsurname = e3.get()
-
+    carid = e1.get()
+    carname = e2.get()
+    carquantity = e3.get()
 
     try:
         conn = psycopg2.connect(
@@ -35,11 +34,11 @@ def Add():
         )
         cursor = conn.cursor()
 
-        sql = "INSERT INTO employers (employer_id, employer_name, employer_surname) VALUES (%s, %s, %s)"
-        val = (empid, empname, empsurname)
+        sql = "INSERT INTO stock (stock_id, name_of_product, quantity_of_stock) VALUES (%s, %s, %s)"
+        val = (carid, carname, carquantity)
         cursor.execute(sql, val)
         conn.commit()
-        messagebox.showinfo("Информация", "Сотрудник успешно добавлен...")
+        messagebox.showinfo("Информация", "Автомобиль успешно добавлен...")
         cursor.close()
         conn.close()
         e1.delete(0, END)
@@ -52,13 +51,12 @@ def Add():
         show()
     except Exception as e:
         print(e)
-        messagebox.showerror("Ошибка", "Не удалось добавить сотрудника.")
+        messagebox.showerror("Ошибка", "Не удалось добавить автомобиль.")
 
 def update():
-    empid = e1.get()
-    empname = e2.get()
-    surname = e3.get()
-
+    carid = e1.get()
+    carname = e2.get()
+    carquantity = e3.get()
 
     try:
         conn = psycopg2.connect(
@@ -66,8 +64,8 @@ def update():
         )
         cursor = conn.cursor()
 
-        sql = "UPDATE employers SET employer_name = %s, employer_surname = %s WHERE employer_id = %s"
-        val = (empname, surname, empid)
+        sql = "UPDATE stock SET name_of_product = %s, quantity_of_stock = %s WHERE stock_id = %s"
+        val = (carname, carquantity, carid)
         cursor.execute(sql, val)
         conn.commit()
         messagebox.showinfo("Информация", "Запись успешно обновлена...")
@@ -86,8 +84,9 @@ def update():
         print(e)
         messagebox.showerror("Ошибка", "Не удалось обновить запись.")
 
+
 def delete():
-    empid = e1.get()
+    carid = e1.get()
 
     try:
         conn = psycopg2.connect(
@@ -95,8 +94,8 @@ def delete():
         )
         cursor = conn.cursor()
 
-        sql = "DELETE FROM employers WHERE employer_id = %s"
-        val = (empid,)
+        sql = "DELETE FROM stock WHERE stock_id = %s"
+        val = (carid,)
         cursor.execute(sql, val)
         conn.commit()
         messagebox.showinfo("Информация", "Запись успешно удалена...")
