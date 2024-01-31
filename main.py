@@ -1,12 +1,22 @@
 import psycopg2
 import tkinter as tk
+import subprocess
 from config import db_name, user, password, host
         
 
 try:
     with psycopg2.connect(database=db_name, user=user, host=host, password=password) as conn:
         print("Успешное подключение к Базе Данных")
-        
+
+
+        def open_employee_file():
+            try:
+                subprocess.Popen(['python',
+                                  'employee.py'])
+            except Exception as e:
+                print(f"An error occurred: {e}")
+
+
         def showemployers():
             with conn.cursor() as curs:
                 curs.execute(f"SELECT * FROM Employers")
@@ -222,14 +232,18 @@ try:
                 
         root = tk.Tk()
         root.geometry("1000x1000")
-        root.title("MultiShop")
+        root.title("Car_Rent_DB")
         icon = tk.PhotoImage(file="icon.png")
         root.tk.call('wm', 'iconphoto', root._w, icon)
-        text_widget = tk.Text(root, width=80, height=15)
+        text_widget = tk.Text(root, width=100, height=20)
         text_widget.pack()
+
+
 
         brands = tk.Button(root, text="Сотрудники", command=showemployers, width=20, height=2)
         brands.pack()
+        button_open_employee = tk.Button(root, text="Добавить сотрудника", command=open_employee_file, width=20, height=2)
+        button_open_employee.pack()
         categories = tk.Button(root, text="Механики", command=showmechanics , width=20, height=2)
         categories.pack()
         products = tk.Button(root, text="Характеристики", command=showcarcharacteristics, width=20, height=2)
