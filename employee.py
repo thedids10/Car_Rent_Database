@@ -33,7 +33,8 @@ def Add():
         )
         cursor = conn.cursor()
 
-        sql = "INSERT INTO employers (employer_id, employer_name, employer_surname, employer_position, employer_salary, employer_contact_information VALUES (%s, %s, %s, %s, %s, %s.)"
+        sql = "INSERT INTO employers (employer_id, employer_name, employer_surname, employer_position, employer_salary, employer_contact_information) VALUES (%s, %s, %s, %s, %s, %s)"
+
         val = (empid, empname, empsurname, position, salary, mobile)
         cursor.execute(sql, val)
         conn.commit()
